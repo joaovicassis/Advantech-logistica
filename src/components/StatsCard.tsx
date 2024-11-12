@@ -6,11 +6,15 @@ interface StatsCardProps {
   value: number;
   icon: LucideIcon;
   color: string;
+  onClick: () => void; // Adiciona a propriedade onClick aqui
 }
 
-export default function StatsCard({ title, value, icon: Icon, color }: StatsCardProps) {
+export default function StatsCard({ title, value, icon: Icon, color, onClick }: StatsCardProps) {
   return (
-    <div className={`bg-white rounded-lg shadow-md p-6 ${color}`}>
+    <div
+      className={`bg-white rounded-lg shadow-md p-6 ${color} cursor-pointer`} // cursor-pointer para indicar que é clicável
+      onClick={onClick} // Chama onClick quando o card é clicado
+    >
       <div className="flex items-center justify-between">
         <div>
           <p className="text-gray-600 text-sm font-medium">{title}</p>

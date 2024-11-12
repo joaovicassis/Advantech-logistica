@@ -28,7 +28,15 @@ const orders: Order[] = [
   },
 ];
 
-export default function OrdersTable() {
+interface OrdersTableProps {
+  filterStatus: string | null;
+}
+
+export default function OrdersTable({ filterStatus }: OrdersTableProps) {
+  const filteredOrders = filterStatus
+    ? orders.filter((order) => order.status === filterStatus)
+    : orders;
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="overflow-x-auto">
@@ -50,7 +58,7 @@ export default function OrdersTable() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {orders.map((order) => (
+            {filteredOrders.map((order) => (
               <tr key={order.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {order.id}
@@ -62,10 +70,15 @@ export default function OrdersTable() {
                   {order.nfeKey}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                    ${order.status === 'Entregue' ? 'bg-green-100 text-green-800' : 
-                      order.status === 'Em atraso' ? 'bg-red-100 text-red-800' : 
-                      'bg-yellow-100 text-yellow-800'}`}>
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      order.status === 'Entregue'
+                        ? 'bg-green-100 text-green-800'
+                        : order.status === 'Em atraso'
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}
+                  >
                     {order.status}
                   </span>
                 </td>
